@@ -12,5 +12,8 @@ public class ParallelArraySummarizer {
 
         Loader loader = new Loader(items, argumentParser.getExponent());
         loader.loadItems();
+
+        CountDownLatchSingleton.setCountDown(argumentParser.getNumberOfThreads());
+
     }
 }
