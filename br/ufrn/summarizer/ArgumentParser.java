@@ -1,3 +1,5 @@
+package br.ufrn.summarizer;
+
 public class ArgumentParser {
 
     private Integer exponent;

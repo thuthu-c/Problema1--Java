@@ -1,3 +1,5 @@
+package br.ufrn.summarizer;
+
 import java.util.List;
 
 public class Loader {

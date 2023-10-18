@@ -1,3 +1,5 @@
+package br.ufrn.summarizer;
+
 import java.util.concurrent.CountDownLatch;
 
 public class CountDownLatchSingleton {

@@ -1,3 +1,5 @@
+package br.ufrn.summarizer;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Item {

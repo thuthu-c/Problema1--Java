@@ -1,5 +1,7 @@
+package br.ufrn.summarizer;
+
 /**
- * AtomicDouble is an int value that may
+ * AtomicDouble is a double value that may
  * be updated atomically and
  * is always up-to-date.
  *
