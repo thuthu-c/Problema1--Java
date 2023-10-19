@@ -1,5 +1,6 @@
 package br.ufrn.summarizer.operation;
 
+import br.ufrn.summarizer.CountDownLatchSingleton;
 import br.ufrn.summarizer.Item;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class SubtotalPerGroupObtainer extends Operation {
     @Override
     public void run() {
         obtainSubtotalPerGroup();
+        CountDownLatchSingleton.countDown();
     }
 
     public SubtotalPerGroupObtainer(List<Item> items, Segment segment, HashMap<Integer, Double> subTotalPerGroup, Lock lock) {

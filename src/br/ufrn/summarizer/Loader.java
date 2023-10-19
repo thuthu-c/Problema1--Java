@@ -1,5 +1,6 @@
 package br.ufrn.summarizer;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Loader {
@@ -16,5 +17,6 @@ public class Loader {
         for (long i = 0L; i < numberOfInsertions; i++) {
             items.add(new Item(i));
         }
+        Collections.shuffle(items);
     }
 }

@@ -1,6 +1,7 @@
 package br.ufrn.summarizer.operation;
 
 import br.ufrn.summarizer.AtomicDouble;
+import br.ufrn.summarizer.CountDownLatchSingleton;
 import br.ufrn.summarizer.Item;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class TotalSumObtainer extends Operation {
     @Override
     public void run() {
         obtainTotalSum();
+        CountDownLatchSingleton.countDown();
     }
 
     public TotalSumObtainer(List<Item> items, Segment segment, AtomicDouble totalSum) {
