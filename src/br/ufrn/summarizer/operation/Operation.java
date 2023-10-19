@@ -6,9 +6,9 @@ import java.util.List;
 
 public abstract class Operation implements Runnable {
 
-    private List<Item> items;
+    protected List<Item> items;
 
-    private Segment segment;
+    protected Segment segment;
 
     public Operation(List<Item> items, Segment segment) {
         this.items = items;

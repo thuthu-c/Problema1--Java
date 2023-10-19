@@ -10,8 +10,8 @@ public class Processer {
     private Integer numberOfThreads;
     private AtomicDouble totalSum = new AtomicDouble(0.0);
     private HashMap<Integer, Double> subTotalPerGroup = new HashMap<>();
-    private List<Integer> idsSmallerThan5 = new ArrayList<>();
-    private List<Integer> idsBiggerThan4 = new ArrayList<>();
+    private List<Long> idsSmallerThan5 = new ArrayList<>();
+    private List<Long> idsBiggerThan4 = new ArrayList<>();
 
 
     public Double obtainTotalSum() {
@@ -28,14 +28,14 @@ public class Processer {
         return subTotalPerGroup;
     }
 
-    public List<Integer> obtainIdsSmallerThan5() {
+    public List<Long> obtainIdsSmallerThan5() {
 
         // TODO: Logic here
 
         return idsSmallerThan5;
     }
 
-    public List<Integer> obtainIdsBiggerThan4() {
+    public List<Long> obtainIdsBiggerThan4() {
 
         // TODO: Logic here
 

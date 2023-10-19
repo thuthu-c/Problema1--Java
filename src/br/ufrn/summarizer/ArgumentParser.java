@@ -5,16 +5,15 @@ public class ArgumentParser {
     private Integer exponent;
     private Integer numberOfThreads;
 
-
     public void parseArguments(String[] args) {
-        if (hasValidNumberOfArguments(args)) {
+        if (hasInvalidNumberOfArguments(args)) {
             throw new RuntimeException("Invalid number of arguments.");
         }
         exponent = Integer.valueOf(args[0]);
         numberOfThreads = Integer.valueOf(args[1]);
     }
 
-    private boolean hasValidNumberOfArguments(String[] args) {
+    private boolean hasInvalidNumberOfArguments(String[] args) {
         return args.length != 2;
     }
 
