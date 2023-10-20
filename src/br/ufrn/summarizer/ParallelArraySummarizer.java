@@ -21,10 +21,17 @@ public class ParallelArraySummarizer {
 
         System.out.println(">>> Processing items...");
         Processer processer = new Processer(items, argumentParser.getNumberOfThreads());
+
+        long start = System.currentTimeMillis();
         processer.processItems();
 
         CountDownLatchSingleton.await();
 
-        System.out.printf("Ids smaller than 5: %s%n", processer.getIdsSmallerThan5().toString());
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
+
+//        System.out.printf("Ids which total is smaller than 5: %s%n", processer.getIdsSmallerThan5());
+//        System.out.printf("Ids which total bigger or equal to 5: %s%n", processer.getIdsBiggerOrEqualTo5());
+        System.out.printf("Elapsed time of processing: %sms%n", timeElapsed);
     }
 }

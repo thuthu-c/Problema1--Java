@@ -18,7 +18,7 @@ public class Item {
      * generates a number in range [0, 10]
      */
     private Double generateTotal() {
-        return ThreadLocalRandom.current().nextDouble(0, 10 + 1);
+        return ThreadLocalRandom.current().nextDouble(0, 10);
     }
 
     /**
@@ -38,5 +38,14 @@ public class Item {
 
     public Integer getGroup() {
         return group;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", total=" + total +
+                ", group=" + group +
+                '}';
     }
 }

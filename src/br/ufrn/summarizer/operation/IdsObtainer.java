@@ -5,27 +5,27 @@ import br.ufrn.summarizer.Item;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
-import java.util.function.LongPredicate;
+import java.util.function.DoublePredicate;
 
 public class IdsObtainer extends Operation {
 
-    private LongPredicate rule;
+    private DoublePredicate rule;
     private List<Long> ids;
     private Lock lock;
 
     private void obtainIds() {
         for (int i = segment.getBeing(); i <= segment.getEnd(); i++) {
-            lock.lock();
-            Long id = items.get(i).getId();
-            if (matchesRule(id)) {
-                ids.add(id);
+            Item item = items.get(i);
+            if (matchesRule(item.getTotal())) {
+                lock.lock();
+                ids.add(item.getId());
+                lock.unlock();
             }
-            lock.unlock();
         }
     }
 
-    private boolean matchesRule(Long id) {
-        return rule.test(id);
+    private boolean matchesRule(Double total) {
+        return rule.test(total);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class IdsObtainer extends Operation {
         CountDownLatchSingleton.countDown();
     }
 
-    public IdsObtainer(List<Item> items, Segment segment, LongPredicate rule, List<Long> ids, Lock lock) {
+    public IdsObtainer(List<Item> items, Segment segment, DoublePredicate rule, List<Long> ids, Lock lock) {
         super(items, segment);
         this.rule = rule;
         this.ids = ids;

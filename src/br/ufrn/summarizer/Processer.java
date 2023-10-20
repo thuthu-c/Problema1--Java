@@ -2,8 +2,6 @@ package br.ufrn.summarizer;
 
 import br.ufrn.summarizer.operation.IdsObtainer;
 import br.ufrn.summarizer.operation.Segment;
-import br.ufrn.summarizer.operation.SubtotalPerGroupObtainer;
-import br.ufrn.summarizer.operation.TotalSumObtainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +16,7 @@ public class Processer {
     private AtomicDouble totalSum = new AtomicDouble(0.0);
     private HashMap<Integer, Double> subTotalPerGroup = new HashMap<>();
     private List<Long> idsSmallerThan5 = new ArrayList<>();
-    private List<Long> idsBiggerThan4 = new ArrayList<>();
+    private List<Long> idsBiggerOrEqualTo5 = new ArrayList<>();
 
 
     private int getOperationAmountOfThreads() {
@@ -36,7 +34,7 @@ public class Processer {
     public void processItems() {
 
         Lock idsSmallerThan5Lock = new ReentrantLock();
-        Lock idsBiggerThan4Lock = new ReentrantLock();
+        Lock idsBiggerOrEqualto5Lock = new ReentrantLock();
         Lock subTotalPerGroupLock = new ReentrantLock();
         Integer operationAmountOfThreads = getOperationAmountOfThreads();
 
@@ -45,11 +43,11 @@ public class Processer {
         while (segmentBegin < items.size()) {
             segmentEnd = getSegmentEnd(segmentBegin, operationAmountOfThreads);
 
-            new Thread(new IdsObtainer(items, new Segment(segmentBegin, segmentEnd), (id) -> id < 5, idsSmallerThan5, idsSmallerThan5Lock)).start();
+            new Thread(new IdsObtainer(items, new Segment(segmentBegin, segmentEnd), (total) -> total < 5, idsSmallerThan5, idsSmallerThan5Lock)).start();
+            new Thread(new IdsObtainer(items, new Segment(segmentBegin, segmentEnd), (total) -> total >= 5, idsBiggerOrEqualTo5, idsBiggerOrEqualto5Lock)).start();
+//            CountDownLatchSingleton.countDown();
             CountDownLatchSingleton.countDown();
             CountDownLatchSingleton.countDown();
-            CountDownLatchSingleton.countDown();
-//            new Thread(new IdsObtainer(items, new Segment(segmentBegin, segmentEnd), (id) -> id > 4, idsBiggerThan4, idsBiggerThan4Lock)).start();
 //            new Thread(new SubtotalPerGroupObtainer(items, new Segment(segmentBegin, segmentEnd), subTotalPerGroup, subTotalPerGroupLock)).start();
 //            new Thread(new TotalSumObtainer(items, new Segment(segmentBegin, segmentEnd), totalSum)).start();
 
@@ -74,7 +72,7 @@ public class Processer {
         return idsSmallerThan5;
     }
 
-    public List<Long> getIdsBiggerThan4() {
-        return idsBiggerThan4;
+    public List<Long> getIdsBiggerOrEqualTo5() {
+        return idsBiggerOrEqualTo5;
     }
 }
