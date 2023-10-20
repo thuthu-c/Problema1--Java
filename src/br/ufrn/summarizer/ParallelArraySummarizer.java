@@ -32,6 +32,7 @@ public class ParallelArraySummarizer {
 
 //        System.out.printf("Ids which total is smaller than 5: %s%n", processer.getIdsSmallerThan5());
 //        System.out.printf("Ids which total bigger or equal to 5: %s%n", processer.getIdsBiggerOrEqualTo5());
-        System.out.printf("Elapsed time of processing: %sms%n", timeElapsed);
+        System.out.printf("Total sum: %s%n", processer.getTotalSum().getValue().toString());
+        System.out.printf("Elapsed processing time: %sms%n", timeElapsed);
     }
 }

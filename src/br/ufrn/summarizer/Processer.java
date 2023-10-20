@@ -2,6 +2,7 @@ package br.ufrn.summarizer;
 
 import br.ufrn.summarizer.operation.IdsObtainer;
 import br.ufrn.summarizer.operation.Segment;
+import br.ufrn.summarizer.operation.TotalSumObtainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,13 +44,12 @@ public class Processer {
         while (segmentBegin < items.size()) {
             segmentEnd = getSegmentEnd(segmentBegin, operationAmountOfThreads);
 
-            new Thread(new IdsObtainer(items, new Segment(segmentBegin, segmentEnd), (total) -> total < 5, idsSmallerThan5, idsSmallerThan5Lock)).start();
-            new Thread(new IdsObtainer(items, new Segment(segmentBegin, segmentEnd), (total) -> total >= 5, idsBiggerOrEqualTo5, idsBiggerOrEqualto5Lock)).start();
-//            CountDownLatchSingleton.countDown();
+            Segment segment = new Segment(segmentBegin, segmentEnd);
+            new Thread(new IdsObtainer(items, segment, (total) -> total < 5, idsSmallerThan5, idsSmallerThan5Lock)).start();
+            new Thread(new IdsObtainer(items, segment, (total) -> total >= 5, idsBiggerOrEqualTo5, idsBiggerOrEqualto5Lock)).start();
+            new Thread(new TotalSumObtainer(items, segment, totalSum)).start();
+//            new Thread(new SubtotalPerGroupObtainer(items, segment, subTotalPerGroup, subTotalPerGroupLock)).start();
             CountDownLatchSingleton.countDown();
-            CountDownLatchSingleton.countDown();
-//            new Thread(new SubtotalPerGroupObtainer(items, new Segment(segmentBegin, segmentEnd), subTotalPerGroup, subTotalPerGroupLock)).start();
-//            new Thread(new TotalSumObtainer(items, new Segment(segmentBegin, segmentEnd), totalSum)).start();
 
             segmentBegin = segmentEnd + 1;
         }

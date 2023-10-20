@@ -24,6 +24,13 @@ public class IdsObtainer extends Operation {
         }
     }
 
+    /**
+     * Checks if item total matches the predicate established
+     * to the id obtainer.
+     *
+     * @param total value to be tested
+     * @return boolean indicating if total matches predicated passed to IdsObtainer
+     */
     private boolean matchesRule(Double total) {
         return rule.test(total);
     }

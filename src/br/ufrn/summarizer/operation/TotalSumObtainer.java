@@ -11,7 +11,9 @@ public class TotalSumObtainer extends Operation {
     private AtomicDouble totalSum;
 
     private void obtainTotalSum() {
-        // TODO
+        for (int i = segment.getBeing(); i <= segment.getEnd(); i++) {
+            totalSum.add(items.get(i).getTotal());
+        }
     }
 
     @Override
