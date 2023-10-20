@@ -1,15 +1,15 @@
 package br.ufrn.summarizer.operation;
 
 public class Segment {
-    private Integer being;
-    private Integer end;
+    private final Integer being;
+    private final Integer end;
 
     public Segment(Integer begin, Integer end) {
         this.being = begin;
         this.end = end;
     }
 
-    public Integer getBeing() {
+    public Integer getBegin() {
         return being;
     }
 

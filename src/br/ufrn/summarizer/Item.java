@@ -4,9 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Item {
 
-    private Long id;
-    private Double total;
-    private Integer group;
+    private final Long id;
+    private final Double total;
+    private final Integer group;
 
     public Item(Long id) {
         this.id = id;
@@ -15,17 +15,17 @@ public class Item {
     }
 
     /**
-     * generates a number in range [0, 10]
+     * generates a double in range [0, 10)
      */
     private Double generateTotal() {
         return ThreadLocalRandom.current().nextDouble(0, 10);
     }
 
     /**
-     * generates a number in range [1, 5]
+     * generates a integer in range [1, 5]
      */
     private Integer generateGroup() {
-        return ThreadLocalRandom.current().nextInt(0, 10 + 1);
+        return ThreadLocalRandom.current().nextInt(1, 6);
     }
 
     public Long getId() {

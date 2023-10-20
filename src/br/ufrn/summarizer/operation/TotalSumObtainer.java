@@ -8,10 +8,10 @@ import java.util.List;
 
 public class TotalSumObtainer extends Operation {
 
-    private AtomicDouble totalSum;
+    private final AtomicDouble totalSum;
 
     private void obtainTotalSum() {
-        for (int i = segment.getBeing(); i <= segment.getEnd(); i++) {
+        for (int i = segment.getBegin(); i <= segment.getEnd(); i++) {
             totalSum.add(items.get(i).getTotal());
         }
     }

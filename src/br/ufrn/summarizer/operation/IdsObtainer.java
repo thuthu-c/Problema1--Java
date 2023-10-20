@@ -9,12 +9,12 @@ import java.util.function.DoublePredicate;
 
 public class IdsObtainer extends Operation {
 
-    private DoublePredicate rule;
-    private List<Long> ids;
-    private Lock lock;
+    private final DoublePredicate rule;
+    private final List<Long> ids;
+    private final Lock lock;
 
     private void obtainIds() {
-        for (int i = segment.getBeing(); i <= segment.getEnd(); i++) {
+        for (int i = segment.getBegin(); i <= segment.getEnd(); i++) {
             Item item = items.get(i);
             if (matchesRule(item.getTotal())) {
                 lock.lock();

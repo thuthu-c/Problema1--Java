@@ -9,11 +9,25 @@ import java.util.concurrent.locks.Lock;
 
 public class SubtotalPerGroupObtainer extends Operation {
 
-    private HashMap<Integer, Double> subTotalPerGroup;
-    private Lock lock;
+    private final HashMap<Integer, Double> subTotalPerGroup;
+    private final Lock lock;
 
     private void obtainSubtotalPerGroup() {
-        // TODO
+        for (int i = segment.getBegin(); i <= segment.getEnd(); i++) {
+            Item item = items.get(i);
+            Double groupSubtotal = getGroupSubtotal(item);
+            lock.lock();
+            subTotalPerGroup.put(item.getGroup(), groupSubtotal + item.getTotal());
+            lock.unlock();
+        }
+    }
+
+    private Double getGroupSubtotal(Item item) {
+        Double groupSubtotal = subTotalPerGroup.get(item.getGroup());
+        if (groupSubtotal == null) {
+            groupSubtotal = 0.0;
+        }
+        return groupSubtotal;
     }
 
     @Override
