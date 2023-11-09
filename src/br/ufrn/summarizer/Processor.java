@@ -1,9 +1,6 @@
 package br.ufrn.summarizer;
 
-import br.ufrn.summarizer.operation.IdsObtainer;
-import br.ufrn.summarizer.operation.Segment;
-import br.ufrn.summarizer.operation.SubtotalPerGroupObtainer;
-import br.ufrn.summarizer.operation.TotalSumObtainer;
+import br.ufrn.summarizer.operation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Processer {
+public class Processor {
 
     private final List<Item> items;
     private final Integer numberOfThreads;
@@ -20,13 +17,8 @@ public class Processer {
     private final List<Long> idsSmallerThan5 = new ArrayList<>();
     private final List<Long> idsBiggerOrEqualTo5 = new ArrayList<>();
 
-
-    private int getOperationAmountOfThreads() {
-        return (numberOfThreads < 4) ? 1 : numberOfThreads / 4;
-    }
-
-    private int getSegmentEnd(int begin, Integer operationAmountOfThreads) {
-        int end = begin + items.size() / operationAmountOfThreads;
+    private int getSegmentEnd(int begin) {
+        int end = begin + items.size() / numberOfThreads;
         if (end >= items.size()) {
             end = items.size() - 1;
         }
@@ -38,24 +30,21 @@ public class Processer {
         Lock idsSmallerThan5Lock = new ReentrantLock();
         Lock idsBiggerOrEqualto5Lock = new ReentrantLock();
         Lock subTotalPerGroupLock = new ReentrantLock();
-        Integer operationAmountOfThreads = getOperationAmountOfThreads();
+
 
         int segmentBegin = 0;
         int segmentEnd;
         while (segmentBegin < items.size()) {
-            segmentEnd = getSegmentEnd(segmentBegin, operationAmountOfThreads);
 
-            Segment segment = new Segment(segmentBegin, segmentEnd);
-            new Thread(new IdsObtainer(items, segment, (total) -> total < 5, idsSmallerThan5, idsSmallerThan5Lock)).start();
-            new Thread(new IdsObtainer(items, segment, (total) -> total >= 5, idsBiggerOrEqualTo5, idsBiggerOrEqualto5Lock)).start();
-            new Thread(new TotalSumObtainer(items, segment, totalSum)).start();
-            new Thread(new SubtotalPerGroupObtainer(items, segment, subTotalPerGroup, subTotalPerGroupLock)).start();
+            segmentEnd = getSegmentEnd(segmentBegin);
+
+            new Thread(new OperationsExecutor(new Segment(segmentBegin, segmentEnd), items, idsBiggerOrEqualto5Lock, idsSmallerThan5Lock, subTotalPerGroupLock, idsSmallerThan5, idsBiggerOrEqualTo5, totalSum, subTotalPerGroup)).start();
 
             segmentBegin = segmentEnd + 1;
         }
     }
 
-    public Processer(List<Item> items, Integer numberOfThreads) {
+    public Processor(List<Item> items, Integer numberOfThreads) {
         this.items = items;
         this.numberOfThreads = numberOfThreads;
     }

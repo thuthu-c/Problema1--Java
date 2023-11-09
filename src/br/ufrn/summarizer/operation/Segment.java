@@ -16,4 +16,12 @@ public class Segment {
     public Integer getEnd() {
         return end;
     }
+
+    @Override
+    public String toString() {
+        return "Segment{" +
+                "being=" + being +
+                ", end=" + end +
+                '}';
+    }
 }

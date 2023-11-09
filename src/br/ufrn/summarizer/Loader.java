@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Loader {
 
-    private List<Item> items;
-    private Long numberOfInsertions;
+    private final List<Item> items;
+    private final Long numberOfInsertions;
 
     public Loader(List<Item> items, Integer exponent) {
         this.items = items;
