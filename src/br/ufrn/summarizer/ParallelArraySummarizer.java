@@ -30,10 +30,10 @@ public class ParallelArraySummarizer {
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
 
-        System.out.printf("Ids which total is smaller than 5: %s%n", processor.getIdsSmallerThan5());
-        System.out.printf("Ids which total bigger or equal to 5: %s%n", processor.getIdsBiggerOrEqualTo5());
         System.out.printf("Total sum: %s%n", processor.getTotalSum().getValue().toString());
         System.out.printf("Subtotal per group: %s%n", processor.getSubTotalPerGroup());
+        System.out.printf("Amount of items which total is smaller than 5: %s%n", processor.getIdsSmallerThan5().size());
+        System.out.printf("Amount of items which total is bigger or equal to 5: %s%n", processor.getIdsBiggerOrEqualTo5().size());
         System.out.printf("Elapsed processing time: %sms%n", timeElapsed);
     }
 }
