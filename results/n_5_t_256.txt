@@ -1,0 +1,5 @@
+Total sum: 500638.54104411695
+Subtotal per group: {1=8974.945000805317, 2=9751.32357090669, 3=8310.749849371534, 4=9394.389464941762, 5=7645.867232093433}
+Amount of items which total is smaller than 5: 49953
+Amount of items which total is bigger or equal to 5: 50047
+Elapsed processing time: 71ms
